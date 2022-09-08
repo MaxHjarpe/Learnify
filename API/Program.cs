@@ -14,24 +14,26 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
+            var logger = services.GetRequiredService<ILogger<Program>>();
 
-            try 
+            try
             {
                 var context = services.GetRequiredService<StoreContext>();
-                context.Database.Migrate();
+                await context.Database.MigrateAsync();
+                await StoreContextSeed.SeedAsync(context, logger);
+
             }
             catch (Exception ex)
             {
-                var logger = services.GetRequiredService<ILogger<Program>>();
                 logger.LogError(ex, "Something wrong happened during migration");
             }
 
-            host.Run();
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
