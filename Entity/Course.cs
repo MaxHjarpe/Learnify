@@ -16,7 +16,7 @@ namespace Entity
 
         public string Image { get; set; }
 
-        public string Subtitle { get; set; }
+        public string SubTitle { get; set; }
 
         public string Description { get; set; }
 
