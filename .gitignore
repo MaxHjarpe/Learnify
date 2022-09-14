@@ -356,3 +356,6 @@ MigrationBackup/
 /Infrastructure/obj
 /API/obj
 /API/bin
+
+**/bin/*
+**/obj/*
