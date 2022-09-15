@@ -12,7 +12,7 @@ namespace Infrastructure
 
             if (spec.Criteria != null)
             {
-                query.Where(spec.Criteria);
+                query = query.Where(spec.Criteria);
             }
 
             query = spec.Include.Aggregate(query, (current, include) => current.Include(include));

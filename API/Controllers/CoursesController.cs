@@ -23,7 +23,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CourseDto>>> GetCourse()
+        public async Task<ActionResult<List<CourseDto>>> GetCourses()
         {
             var spec = new CoursesWithCategoriesSpecification();
             var courses = await _repository.ListWithSpec(spec);
