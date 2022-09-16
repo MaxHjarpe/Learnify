@@ -22,8 +22,6 @@ namespace API.ErrorResponse
                 500 => "Internal server error",
                 _ => "An error has occurred"
             };
-
-
         }
     }
 }
