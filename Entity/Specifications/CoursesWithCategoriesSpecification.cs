@@ -5,14 +5,15 @@ namespace Entity.Specifications
 {
     public class CoursesWithCategoriesSpecification : BaseSpecification<Course>
     {
-        public CoursesWithCategoriesSpecification(string sort, int? categoryId) : base(x =>
-            !categoryId.HasValue || x.CategoryId == categoryId)
+        public CoursesWithCategoriesSpecification(CourseParams courseParams) : base(x =>
+            !courseParams.CategoryId.HasValue || x.CategoryId == courseParams.CategoryId)
         {
             IncludeMethod(x => x.Category);
+             ApplyPagination(courseParams.PageSize, courseParams.PageSize * (courseParams.PageIndex -1));
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(courseParams.Sort))
             {
-                switch (sort)
+                switch (courseParams.Sort)
                 {
                     case "priceAscending":
                         SortMethod(c => c.Price);
