@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Course } from "../models/course";
 import { PaginatedCourse } from "../models/paginatedCourse";
 import { Category } from "../models/category";
+import { request } from "http";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -18,12 +19,13 @@ const requests = {
 const Courses = {
   list: () => requests.get<PaginatedCourse>('/courses'),
   getById: (id: string) => requests.get<Course>(`courses/${id}`),
-}
+};
 
 const Categories = {
   list: () => requests.get<Category[]>('/categories'),
+  getCategory: (id: number) => requests.get<Category>(`/categories/${id}`),
 
-}
+};
 
 const agent = {
   Courses,
