@@ -13,4 +13,5 @@ export interface Course {
   level: string;
   students: number;  
   subTitle: string;
+  lastUpdated: Date;
 }
