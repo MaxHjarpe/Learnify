@@ -8,16 +8,12 @@ import ShowCourses from "../components/ShowCourses";
 
 const Homepage = () => {
   const [data, setData] = useState<PaginatedCourse>();
-  
 
   useEffect(() => {
     agent.Courses.list().then((response) => {
       setData(response);
     });
-
   }, []);
-
-  
 
   return (
     <div className="course">
@@ -26,9 +22,10 @@ const Homepage = () => {
         <h2>New courses picked just for you!</h2>
       </div>
       <Row gutter={[24, 32]}>
-        {data && data.data.map((course: Course, index: number) => {
-          return <ShowCourses key={index} course={course}/>
-        })}
+        {data &&
+          data.data.map((course: Course, index: number) => {
+            return <ShowCourses key={index} course={course} />;
+          })}
       </Row>
     </div>
   );

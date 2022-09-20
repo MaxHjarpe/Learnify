@@ -3,11 +3,11 @@ import { Card, Col } from "antd";
 import * as FaIcons from "react-icons/fa";
 import { Course } from "../models/course";
 
-interface Props  {
-    course: Course
+interface Props {
+  course: Course;
 }
 
-const ShowCourses = ({course} : Props) => {
+const ShowCourses = ({ course }: Props) => {
   const [spanVal, setSpanVal] = useState<number>();
 
   const checkWidth = (): void => {
@@ -39,7 +39,7 @@ const ShowCourses = ({course} : Props) => {
     }
     return options;
   };
-  
+
   return (
     <>
       <Col className="gutter-row" span={spanVal}>
