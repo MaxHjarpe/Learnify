@@ -18,7 +18,7 @@ const requests = {
 
 const Courses = {
   list: () => requests.get<PaginatedCourse>('/courses'),
-  getById: (id: string) => requests.get<Course>(`courses/${id}`),
+  getById: (id: string) => requests.get<Course>(`/courses/${id}`),
 };
 
 const Categories = {
