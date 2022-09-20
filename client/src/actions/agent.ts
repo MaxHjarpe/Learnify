@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Course } from "../models/course";
 import { PaginatedCourse } from "../models/paginatedCourse";
+import { Category } from "../models/category";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -19,8 +20,14 @@ const Courses = {
   getById: (id: string) => requests.get<Course>(`courses/${id}`),
 }
 
+const Categories = {
+  list: () => requests.get<Category[]>('/categories'),
+
+}
+
 const agent = {
   Courses,
+  Categories
 };
 
 export default agent;
