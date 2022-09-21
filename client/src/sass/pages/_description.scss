@@ -252,30 +252,39 @@
 
       &__button {
         display: flex;
+        flex-direction: column;
         margin-top: 20px;
         justify-content: center;
-        padding: 1.6rem;
-        background-image: linear-gradient(
-          to left,
-          ($color-secondary-dark),
-          ($color-secondary-light)
-        );
-        transition: all 0.2s;
 
-        &:hover {
-          background-image: linear-gradient(
-            to left,
-            ($color-secondary-light),
-            ($color-secondary-dark)
-          );
+        & > * {
+          display: flex;
+          justify-content: center;
+          color: #fff;
+          padding: 1.6rem;
+          margin: 5px 0;
+          font-weight: bold;
+          cursor: pointer;
         }
 
         &--text {
-          color: #fff;
+          background-image: linear-gradient(
+            to left,
+            ($color-secondary-dark),
+            ($color-secondary-light)
+          );
           transition: all 0.2s;
+
           &:hover {
-            color: black;
+            background-image: linear-gradient(
+              to left,
+              ($color-secondary-light),
+              ($color-secondary-dark)
+            );
           }
+        }
+
+        &--cart {
+          background-color: $color-primary;
         }
       }
 
