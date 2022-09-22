@@ -3,10 +3,18 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
+import { Pagination } from "../../models/pagination";
 import agent from "../../actions/agent";
 import { Course, CourseParams } from "../../models/course";
 import { PaginatedCourse } from "../../models/paginatedCourse";
 import { RootState } from "../store/configureStore";
+
+interface CourseState {
+  coursesLoaded: boolean;
+  status: string;
+  pagination: Pagination | null;
+  courseParams: CourseParams;
+}
 
 const coursesAdapter = createEntityAdapter<Course>();
 
@@ -29,6 +37,12 @@ export const getCoursesAsync = createAsyncThunk<
   const params = getAxiosParams(thunkAPI.getState().course.courseParams);
   try {
     const response = await agent.Courses.list(params);
+    const paged = {
+      pageIndex: response.pageIndex,
+      pageSize: response.pageSize,
+      totalCount: response.count,
+    };
+    thunkAPI.dispatch(setPagination(paged));
     return response;
   } catch (err) {
     console.log(err);
@@ -56,10 +70,11 @@ function getParams() {
 
 export const courseSlice = createSlice({
   name: "course",
-  initialState: coursesAdapter.getInitialState<any>({
+  initialState: coursesAdapter.getInitialState<CourseState>({
     coursesLoaded: false,
     status: "idle",
     courseParams: getParams(),
+    pagination: null,
   }),
   reducers: {
     setCourseParams: (state, action) => {
@@ -70,8 +85,15 @@ export const courseSlice = createSlice({
         pageIndex: 1,
       };
     },
+    setPageNumber: (state, action) => {
+      state.coursesLoaded = false;
+      state.courseParams = { ...state.courseParams, ...action.payload };
+    },
     setPagination: (state, action) => {
       state.pagination = action.payload;
+    },
+    resetCourseParams: (state) => {
+      state.courseParams = getParams();
     },
   },
   extraReducers: (builder) => {
@@ -104,4 +126,9 @@ export const coursesSelector = coursesAdapter.getSelectors(
   (state: RootState) => state.course
 );
 
-export const { setCourseParams } = courseSlice.actions;
+export const {
+  setCourseParams,
+  setPagination,
+  setPageNumber,
+  resetCourseParams,
+} = courseSlice.actions;
