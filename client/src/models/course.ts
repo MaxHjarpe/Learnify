@@ -11,7 +11,7 @@ export interface Course {
   learnings: Learning[] | [];
   requirements: Requirement[] | [];
   level: string;
-  students: number;  
+  students: number;
   subTitle: string;
   lastUpdated: Date;
 }
@@ -24,4 +24,12 @@ export interface Learning {
 export interface Requirement {
   id: number;
   name: string;
+}
+
+export interface CourseParams {
+  sort: string;
+  search?: string;
+  pageIndex: number;
+  pageSize: number;
+  category?: number; 
 }

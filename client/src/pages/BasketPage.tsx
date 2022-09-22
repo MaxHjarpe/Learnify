@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "antd";
-import { CourseItem } from "../models/Basket";
+import { CourseItem } from "../models/basket";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
