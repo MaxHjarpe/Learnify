@@ -28,13 +28,13 @@ namespace Infrastructure
                     
                     var instructor = new User
                     {
-                        UserName = "instructor",
+                        UserName = "Instructor",
                         Email = "instructor@test.com",
                     };
                     await userManager.CreateAsync(instructor, "Password@123");
                     await userManager.AddToRolesAsync(instructor, new[] {"Instructor", "Student"});
                 }
-                
+
                 if (!context.Categories.Any())
                 {
                     var categoryData = File.ReadAllText("../Infrastructure/SeedData/categories.json");
