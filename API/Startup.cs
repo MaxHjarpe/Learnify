@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.ErrorResponse;
 using API.Helpers;
 using API.Middleware;
+using Entity;
 using Entity.Interfaces;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentityCore<User>();
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
             services.AddAutoMapper(typeof(MappingProfiles));
