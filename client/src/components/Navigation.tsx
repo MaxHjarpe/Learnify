@@ -1,10 +1,10 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { setCourseParams } from "../redux/slice/courseSlice";
-import { useAppSelector } from "../redux/store/configureStore";
+import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
 
 const Navigation = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -12,7 +12,7 @@ const Navigation = () => {
   const { basket } = useAppSelector((state) => state.basket);
   const basketCount = basket?.items.length;
   const showSidebar = () => setSidebar(!sidebar);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
