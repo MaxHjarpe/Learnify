@@ -1,18 +1,27 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 // import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { setCourseParams } from "../redux/slice/courseSlice";
+import { signOut } from "../redux/slice/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
+import UserMenu from "./UserMenu";
 
 const Navigation = () => {
   const [sidebar, setSidebar] = useState(false);
   const [searchText, setSearchText] = useState("");
   const { basket } = useAppSelector((state) => state.basket);
+  const { user } = useAppSelector((state) => state.user);
   const basketCount = basket?.items.length;
   const showSidebar = () => setSidebar(!sidebar);
   const dispatch = useAppDispatch();
+
+  const history = useHistory();
+  const signout = () => {
+    dispatch(signOut());
+    history.push("/");
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -39,9 +48,19 @@ const Navigation = () => {
                 <Link to="/">
                   <li>Home</li>
                 </Link>
-                <Link to="/login">
-                  <li>Login</li>
-                </Link>
+                {user ? (
+                  <>
+                    {" "}
+                    <Link to="/profile"> <li>Profile</li> </Link>{" "}
+                    <div onClick={signout}>
+                      <li>Log out</li>
+                    </div>{" "}
+                  </>
+                ) : (
+                  <Link to="/login">
+                    <li>Log in</li>
+                  </Link>
+                )}
               </ul>
             </nav>
           </div>
@@ -51,9 +70,15 @@ const Navigation = () => {
             <Link to="/">
               <li className="nav__left__list__item">Home</li>
             </Link>
-            <Link to="/login">
-              <li className="nav__left__list__item">Login</li>
-            </Link>
+            {user ? (
+              <li className="nav__left__list__item">
+                <UserMenu />
+              </li>
+            ) : (
+              <Link to="/login">
+                <li className="nav__left__list__item">Log in</li>
+              </Link>
+            )}
           </ul>
         </div>
         <div className="nav__right">
