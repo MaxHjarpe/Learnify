@@ -44,7 +44,7 @@ namespace API.Controllers
 
             var result = await _context.SaveChangesAsync() > 0;
 
-            if (result) return BadRequest(new ApiResponse(400, "Problem updating basket with intent"));
+            if (!result) return BadRequest(new ApiResponse(400, "Problem updating basket with intent"));
 
             return _mapper.Map<Basket, BasketDto>(basket);
 
