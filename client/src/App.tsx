@@ -9,35 +9,16 @@ import Category from "./components/Categories";
 import CategoryPage from "./pages/CategoryPage";
 import DescriptionPage from "./pages/DescriptionPage";
 import BasketPage from "./pages/BasketPage";
-import agent from "./actions/agent";
 import { useAppDispatch } from "./redux/store/configureStore";
-import { setBasket } from "./redux/slice/basketSlice";
+import { fetchBasketItemAsync } from "./redux/slice/basketSlice";
 import Dashboard from "./pages/Dashboard";
 import { getUser } from "./redux/slice/userSlice";
 
 function App() {
-
   const dispatch = useAppDispatch();
 
-  function getCookie(name: string) {
-    return (
-      document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() ||
-      ""
-    );
-  }
-
   useEffect(() => {
-    const clientId = getCookie("clientId");
-
-    if (clientId) {
-      agent.Baskets.get()
-        .then((response) => {
-          dispatch(setBasket(response))
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    dispatch(fetchBasketItemAsync());
     dispatch(getUser());
   }, [dispatch]);
 
