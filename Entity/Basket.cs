@@ -12,6 +12,10 @@ namespace Entity
 
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
+        public string PaymentIntentId { get; set; }
+
+        public string ClientSecret { get; set; }
+
         public void AddCourseItem(Course course)
         {
             if (Items.All(item => item.CourseId != course.Id))
