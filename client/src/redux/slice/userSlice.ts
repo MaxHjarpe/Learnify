@@ -43,7 +43,13 @@ export const userSlice = createSlice({
     signOut: (state) => {
       state.user = null;
       localStorage.removeItem("user");
-    }
+    },
+    getUser: (state) => {
+      const user = localStorage.getItem("user");
+      if (user) {
+        state.user = JSON.parse(user);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -53,13 +59,12 @@ export const userSlice = createSlice({
       }
     );
     builder.addMatcher(
-        isAnyOf(signInUser.rejected, registerUser.rejected),
-        (state, action) => {
-          throw action.payload;
-        }
-      );
+      isAnyOf(signInUser.rejected, registerUser.rejected),
+      (state, action) => {
+        throw action.payload;
+      }
+    );
   },
 });
 
-
-export const {signOut} = userSlice.actions;
+export const { signOut, getUser } = userSlice.actions;
