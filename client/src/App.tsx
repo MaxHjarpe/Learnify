@@ -13,6 +13,7 @@ import { useAppDispatch } from "./redux/store/configureStore";
 import { fetchBasketItemAsync } from "./redux/slice/basketSlice";
 import Dashboard from "./pages/Dashboard";
 import { getUser } from "./redux/slice/userSlice";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -33,7 +34,7 @@ function App() {
         <Route exact path="/course/:id" component={DescriptionPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/detail" component={DetailPage} />
-        <Route exact path="/profile" component={Dashboard} />
+        <PrivateRoute exact path="/profile" component={Dashboard} />
       </Switch>
     </>
   );
