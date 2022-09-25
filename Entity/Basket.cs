@@ -29,6 +29,15 @@ namespace Entity
             var course = Items.FirstOrDefault(item => item.CourseId == courseId);
             Items.Remove(course);
         }
+
+
+
+        public void ClearBasket()
+        {
+            PaymentIntentId = null;
+            ClientSecret = null;
+            Items.Clear();
+        }
     }
 
 }
