@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import LoginPage from "./pages/Login";
 import DetailPage from "./pages/DetailPage";
@@ -15,14 +15,26 @@ import Dashboard from "./pages/Dashboard";
 import { fetchCurrentUser } from "./redux/slice/userSlice";
 import PrivateRoute from "./components/PrivateRoute";
 import CheckoutPage from "./pages/CheckoutPage";
+import Loading from "./components/Loading";
 
 function App() {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
+
+  const appInit = useCallback(async () => {
+    try {
+      await dispatch(fetchBasketItemAsync());
+      await dispatch(fetchCurrentUser());
+    } catch (error: any) {
+      console.log(error);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchBasketItemAsync());
-    dispatch(fetchCurrentUser());
-  }, [dispatch]);
+    appInit().then(() => setLoading(false));
+  }, [appInit]);
+
+  if (loading) return <Loading />;
 
   return (
     <>
