@@ -5,6 +5,7 @@ import { basketSlice } from "../slice/basketSlice";
 import { categorySlice } from "../slice/categorySlice";
 import { courseSlice } from "../slice/courseSlice";
 import { loginSlice } from "../slice/loginSlice";
+import { userSlice } from "../slice/userSlice";
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         basket: basketSlice.reducer,
         course: courseSlice.reducer,
         category: categorySlice.reducer,
+        user: userSlice.reducer,
     },
 });
 

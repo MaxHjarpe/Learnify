@@ -1,10 +1,12 @@
 using System.Reflection;
 using Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure
 {
-    public class StoreContext : DbContext
+    public class StoreContext : IdentityDbContext<User>
     {
 
         public StoreContext(DbContextOptions options) : base(options)
@@ -22,6 +24,12 @@ namespace Infrastructure
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            builder.Entity<IdentityRole>()
+            .HasData(
+                new IdentityRole{Name = "Student", NormalizedName = "STUDENT"},
+                new IdentityRole{Name = "Instructor", NormalizedName = "INSTRUCTOR"}
+            );
         }
     }
 }

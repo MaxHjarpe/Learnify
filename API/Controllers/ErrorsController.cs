@@ -1,5 +1,6 @@
 using API.ErrorResponse;
 using Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,6 +12,14 @@ namespace API.Controllers
         {
             _context = context;
         }
+        [HttpGet("authcheck")]
+        [Authorize]
+        public ActionResult<string> CheckAuthorization()
+        {
+            return "You are authorized";
+        }
+
+
 
         [HttpGet("notFound")]
         public ActionResult NotFoundMethod()
@@ -45,5 +54,6 @@ namespace API.Controllers
         {
             return Ok();
         }
+
     }
 }
