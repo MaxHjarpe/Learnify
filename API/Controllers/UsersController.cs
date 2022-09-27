@@ -112,6 +112,17 @@ namespace API.Controllers
               return BadRequest(new ApiResponse(400, "Problem adding Course"));
 
          }
+         
+        [Authorize]
+        [HttpPost("addRole")]
+
+        public async Task<ActionResult> AddRole()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            await _userManager.AddToRoleAsync(user, "Instructor");
+            return Ok();
+        }
 
         [Authorize]
         [HttpGet("currentUser")]
