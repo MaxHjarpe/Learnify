@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { act } from "@testing-library/react";
 import { notification } from "antd";
 import agent from "../../actions/agent";
 import { Course } from "../../models/course";
@@ -28,13 +27,13 @@ export const fetchCurrentUser = createAsyncThunk<User>(
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue({ error: error });
+      return thunkAPI.rejectWithValue({ error: error.data });
     }
   },
   {
     condition: () => {
       if (!localStorage.getItem("user")) return false;
-    }
+    },
   }
 );
 
@@ -43,8 +42,9 @@ export const signInUser = createAsyncThunk<User, Login>(
   async (data, thunkAPI) => {
     try {
       const userData = await agent.Users.login(data);
-      const { basket, ...user } = userData;
+      const { basket, courses, ...user } = userData;
       if (basket) thunkAPI.dispatch(setBasket(basket));
+      if (courses) thunkAPI.dispatch(setUserCourses(courses));
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     } catch (err: any) {
@@ -66,6 +66,17 @@ export const registerUser = createAsyncThunk<User, Register>(
   }
 );
 
+export const addRole = createAsyncThunk<void>(
+  "user/addRole",
+  async (_, thunkAPI) => {
+    try {
+      await agent.Users.addRole();
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue({ error: err });
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -75,7 +86,13 @@ export const userSlice = createSlice({
       localStorage.removeItem("user");
     },
     setUser: (state, action) => {
-      state.user = action.payload;
+      let claims = JSON.parse(atob(action.payload.token.split(".")[1]));
+      let roles =
+        claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      state.user = {
+        ...action.payload,
+        roles: typeof roles === "string" ? [roles] : roles,
+      };
     },
     setUserCourses: (state, action) => {
       state.userCourses = action.payload;
@@ -86,7 +103,7 @@ export const userSlice = createSlice({
       state.user = null;
       localStorage.removeItem("user");
       notification.error({
-        message: "Session has expired",
+        message: "Session has been expired",
       });
     });
     builder.addMatcher(
@@ -96,7 +113,15 @@ export const userSlice = createSlice({
         fetchCurrentUser.fulfilled
       ),
       (state, action) => {
-        state.user = action.payload;
+        let claims = JSON.parse(atob(action.payload.token.split(".")[1]));
+        let roles =
+          claims[
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+          ];
+        state.user = {
+          ...action.payload,
+          roles: typeof roles === "string" ? [roles] : roles,
+        };
       }
     );
     builder.addMatcher(
@@ -105,7 +130,6 @@ export const userSlice = createSlice({
         throw action.payload;
       }
     );
-    
   },
 });
 
