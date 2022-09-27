@@ -2,9 +2,9 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-} from "@reduxjs/toolkit";
-import agent from "../../actions/agent";
-import { Lecture } from "../../models/lecture";
+} from '@reduxjs/toolkit';
+import agent from '../../actions/agent';
+import { Lecture } from '../../models/lecture';
 
 interface LectureState {
   lecture: Lecture | null;
@@ -18,11 +18,11 @@ const lecturesAdapter = createEntityAdapter<Lecture>();
 export const getLecturesAsync = createAsyncThunk<
   Lecture | undefined,
   { courseId: string }
->("lecture/getLecturesAsync", async ({ courseId }, thunkAPI) => {
+>('lecture/getLecturesAsync', async ({ courseId }, thunkAPI) => {
   try {
     return await agent.Lectures.getLectures(courseId);
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue({ error: error });
+  } catch (err: any) {
+    return thunkAPI.rejectWithValue({ error: err });
   }
 });
 
@@ -30,30 +30,30 @@ export const setCurrentLectureAsync = createAsyncThunk<
   void,
   { lectureId: number; courseId: string }
 >(
-  "lecture/setCurrentLectureAsync",
+  'lecture/setCurrentLecturesAsync',
   async ({ lectureId, courseId }, thunkAPI) => {
     try {
       await agent.Lectures.setCurrentLecture({ lectureId, courseId });
-    } catch (error: any) {
-      thunkAPI.rejectWithValue({ error: error });
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue({ error: err });
     }
-  }
+  },
 );
 
 export const lectureSlice = createSlice({
-  name: "lecture",
+  name: 'lecture',
   initialState: lecturesAdapter.getInitialState<LectureState>({
     lecture: null,
     lectureLoaded: false,
     currentLecture: 0,
-    currentVideo: "",
+    currentVideo: '',
   }),
   reducers: {
     setCurrentLecture: (state, action) => {
       state.currentLecture = action.payload;
     },
     setCurrentVideo: (state, action) => {
-      state.currentLecture = action.payload;
+      state.currentVideo = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -65,10 +65,11 @@ export const lectureSlice = createSlice({
       state.lecture = action.payload!;
       state.currentLecture = action.payload?.currentLecture!;
     });
-    builder.addCase(getLecturesAsync.rejected, (state) => {
+    builder.addCase(getLecturesAsync.rejected, (state, action) => {
       state.lectureLoaded = true;
     });
   },
 });
 
-export const {setCurrentLecture, setCurrentVideo} = lectureSlice.actions;
+export const { setCurrentLecture, setCurrentVideo } =
+  lectureSlice.actions;
