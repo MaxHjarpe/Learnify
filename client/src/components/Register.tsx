@@ -25,7 +25,6 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
 
   const [form] = Form.useForm();
 
-  const history = useHistory();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,6 +35,8 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
     setValues({ ...values, email: "", password: "", username: "" });
     form.resetFields();
   };
+
+  const history = useHistory();
 
   const submitUser = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -50,6 +51,7 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
       }
       resetForm();
     } catch (err: any) {
+      console.log(err);
       notification.error({
         message: "Please check your credentials",
       });

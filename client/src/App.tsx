@@ -23,8 +23,8 @@ function App() {
 
   const appInit = useCallback(async () => {
     try {
-      await dispatch(fetchBasketItemAsync());
       await dispatch(fetchCurrentUser());
+      await dispatch(fetchBasketItemAsync());
     } catch (error: any) {
       console.log(error);
     }
