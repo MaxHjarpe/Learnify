@@ -1,3 +1,4 @@
+import { Input } from "antd";
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 // import { useDispatch } from "react-redux";
@@ -85,13 +86,14 @@ const Navigation = () => {
         </div>
         <div className="nav__right">
           <form onSubmit={onSearch} className="nav__right__search">
-            <input
+            <Input  
               type="text"
               className="nav__right__search__input"
-              placeholder="Search Courses..."
+              placeholder="Search Course..."
               value={searchText}
               onChange={handleChange}
             />
+            
             <button className="nav__right__search__button">
               <i className="fas fa-search"></i>
             </button>
