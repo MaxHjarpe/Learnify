@@ -20,6 +20,8 @@ namespace Infrastructure
         public DbSet<Learning> Learnings { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -28,12 +30,12 @@ namespace Infrastructure
 
             builder.Entity<IdentityRole>()
             .HasData(
-                new IdentityRole{Name = "Student", NormalizedName = "STUDENT"},
-                new IdentityRole{Name = "Instructor", NormalizedName = "INSTRUCTOR"}
+                new IdentityRole { Name = "Student", NormalizedName = "STUDENT" },
+                new IdentityRole { Name = "Instructor", NormalizedName = "INSTRUCTOR" }
             );
 
             builder.Entity<UserCourse>()
-            .HasKey(uc => new {uc.UserId, uc.CourseId});
+            .HasKey(uc => new { uc.UserId, uc.CourseId });
 
             builder.Entity<UserCourse>()
             .HasOne(uc => uc.User)
