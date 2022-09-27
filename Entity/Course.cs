@@ -38,5 +38,7 @@ namespace Entity
 
         public ICollection<UserCourse> UserCourses { get; set; }
 
+        public ICollection<Section> Sections { get; set; }
+
     }
 }
