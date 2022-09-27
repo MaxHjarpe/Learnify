@@ -147,6 +147,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("Learnings");
                 });
 
+            modelBuilder.Entity("Entity.Lecture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SectionId");
+
+                    b.ToTable("Lectures");
+                });
+
             modelBuilder.Entity("Entity.Requirement", b =>
                 {
                     b.Property<int>("Id")
@@ -164,6 +186,25 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Requirements");
+                });
+
+            modelBuilder.Entity("Entity.Section", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Entity.User", b =>
@@ -273,15 +314,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6f28f7b6-7cb9-40fe-84ab-4106370dae1a",
-                            ConcurrencyStamp = "22afa325-a497-4ed9-bd57-b6fb215fdcc5",
+                            Id = "2b9106ac-1f1f-4b5f-9f4d-54cfd0e489b4",
+                            ConcurrencyStamp = "c14c3d63-b7b8-4298-814b-dba1feb87dd1",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "15e61c21-5337-4c1e-9398-f0fbe09025d9",
-                            ConcurrencyStamp = "658a191a-168a-4d35-808c-167bb6f39051",
+                            Id = "f49769b0-62f8-4101-a8d3-cf6f41f5e984",
+                            ConcurrencyStamp = "cf4cca72-d426-4985-8341-0a0b7923cc6f",
                             Name = "Instructor",
                             NormalizedName = "INSTRUCTOR"
                         });
@@ -430,10 +471,32 @@ namespace Infrastructure.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("Entity.Lecture", b =>
+                {
+                    b.HasOne("Entity.Section", "Section")
+                        .WithMany("Lectures")
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Section");
+                });
+
             modelBuilder.Entity("Entity.Requirement", b =>
                 {
                     b.HasOne("Entity.Course", "Course")
                         .WithMany("Requirements")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Entity.Section", b =>
+                {
+                    b.HasOne("Entity.Course", "Course")
+                        .WithMany("Sections")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -527,7 +590,14 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Requirements");
 
+                    b.Navigation("Sections");
+
                     b.Navigation("UserCourses");
+                });
+
+            modelBuilder.Entity("Entity.Section", b =>
+                {
+                    b.Navigation("Lectures");
                 });
 
             modelBuilder.Entity("Entity.User", b =>
