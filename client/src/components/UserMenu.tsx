@@ -4,6 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import { removeBasket } from "../redux/slice/basketSlice";
 import { signOut } from "../redux/slice/userSlice";
 import { useAppSelector } from "../redux/store/configureStore";
+import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+
 
 const UserMenu = () => {
   const dispatch = useDispatch();
@@ -19,23 +21,23 @@ const UserMenu = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item>
-        <Link to="/profile">Profile</Link>
+      <Menu.Item key={1}>
+        <Link to="/profile">My Courses</Link>
       </Menu.Item>
       {user?.roles?.includes("Instructor") && (
-        <Menu.Item>
-          <Link to="/instructor">Instructor</Link>
+        <Menu.Item key={2}>
+          <Link to="/instructor">Go to instructor page</Link>
         </Menu.Item>
       )}
-      <Menu.Item>
-        <div onClick={signout}>Logout</div>
+      <Menu.Item key={3}>
+        <div onClick={signout}>Log out <LogoutOutlined /></div>
       </Menu.Item>
     </Menu>
   );
   return (
-    <Dropdown overlay={menu} placement="bottomCenter">
-      <div className="dropdown">Menu</div>
-    </Dropdown>
+    <Dropdown.Button overlay={menu} placement="bottom" icon={<UserOutlined />}>
+      Menu
+    </Dropdown.Button>
   );
 };
 
