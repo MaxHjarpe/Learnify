@@ -1,32 +1,32 @@
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { notification } from "antd";
-import agent from "../../actions/agent";
-import { Course } from "../../models/course";
-import { Login, Register, User } from "../../models/user";
-import { setBasket } from "./basketSlice";
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { notification } from 'antd';
+import agent from '../../actions/agent';
+import { Course } from '../../models/course';
+import { Login, Register, User } from '../../models/user';
+import { setBasket } from './basketSlice';
 
 interface UserState {
   user: User | null;
   userCourses: Course[];
-  unpublishedCourses: Course[];
+  unpublishedCourses: Course[]
 }
 
 const initialState: UserState = {
   user: null,
   userCourses: [],
-  unpublishedCourses: [],
+  unpublishedCourses: []
 };
 
 export const fetchCurrentUser = createAsyncThunk<User>(
-  "user/fetchCurrentUser",
+  'user/fetchCurrentUser',
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem("user")!)));
+    thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem('user')!)));
     try {
       const userDto = await agent.Users.currentUser();
       const { basket, courses, ...user } = userDto;
       if (basket) thunkAPI.dispatch(setBasket(basket));
       if (courses) thunkAPI.dispatch(setUserCourses(courses));
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.data });
@@ -34,77 +34,77 @@ export const fetchCurrentUser = createAsyncThunk<User>(
   },
   {
     condition: () => {
-      if (!localStorage.getItem("user")) return false;
+      if (!localStorage.getItem('user')) return false;
     },
-  }
+  },
 );
 
 export const signInUser = createAsyncThunk<User, Login>(
-  "user/signin",
+  'user/signin',
   async (data, thunkAPI) => {
     try {
       const userData = await agent.Users.login(data);
       const { basket, courses, ...user } = userData;
       if (basket) thunkAPI.dispatch(setBasket(basket));
       if (courses) thunkAPI.dispatch(setUserCourses(courses));
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (err: any) {
       return thunkAPI.rejectWithValue({ error: err });
     }
-  }
+  },
 );
 
 export const registerUser = createAsyncThunk<User, Register>(
-  "user/register",
+  'user/register',
   async (data, thunkAPI) => {
     try {
       const user = await agent.Users.register(data);
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (err: any) {
       return thunkAPI.rejectWithValue({ error: err });
     }
-  }
+  },
 );
 
 export const addRole = createAsyncThunk<void>(
-  "user/addRole",
+  'user/addRole',
   async (_, thunkAPI) => {
     try {
       await agent.Users.addRole();
     } catch (err: any) {
       return thunkAPI.rejectWithValue({ error: err });
     }
-  }
+  },
 );
 
 export const getUnpublishedCourses = createAsyncThunk<Course[]>(
-  "user/getUnpublishedCourses",
+  'user/getUnpublishedCourses',
   async (_, thunkAPI) => {
     try {
-      return await agent.Users.unpublishedCourses();
+     return await agent.Users.unpublishedCourses();
     } catch (err: any) {
       return thunkAPI.rejectWithValue({ error: err });
     }
-  }
+  },
 );
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     signOut: (state) => {
       state.user = null;
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
     },
     setUser: (state, action) => {
-      let claims = JSON.parse(atob(action.payload.token.split(".")[1]));
+      let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
       let roles =
-        claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       state.user = {
         ...action.payload,
-        roles: typeof roles === "string" ? [roles] : roles,
+        roles: typeof roles === 'string' ? [roles] : roles,
       };
     },
     setUserCourses: (state, action) => {
@@ -114,37 +114,37 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCurrentUser.rejected, (state) => {
       state.user = null;
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
       notification.error({
-        message: "Session has been expired",
-      });
-      builder.addCase(getUnpublishedCourses.fulfilled, (state, action) => {
-        state.unpublishedCourses = action.payload;
+        message: 'Session has been expired',
       });
     });
+     builder.addCase(getUnpublishedCourses.fulfilled, (state, action) => {
+      state.unpublishedCourses = action.payload
+     });
     builder.addMatcher(
       isAnyOf(
         signInUser.fulfilled,
         registerUser.fulfilled,
-        fetchCurrentUser.fulfilled
+        fetchCurrentUser.fulfilled,
       ),
       (state, action) => {
-        let claims = JSON.parse(atob(action.payload.token.split(".")[1]));
+        let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
         let roles =
           claims[
-            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
           ];
         state.user = {
           ...action.payload,
-          roles: typeof roles === "string" ? [roles] : roles,
+          roles: typeof roles === 'string' ? [roles] : roles,
         };
-      }
+      },
     );
     builder.addMatcher(
       isAnyOf(signInUser.rejected, registerUser.rejected),
       (state, action) => {
         throw action.payload;
-      }
+      },
     );
   },
 });
