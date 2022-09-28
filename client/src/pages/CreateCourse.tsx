@@ -110,7 +110,7 @@ const CreateCourse = () => {
           rules={[
             {
               min: 10,
-              message: 'Description Should have at least 10 characters',
+              message: 'Description should have at least 10 characters',
             },
             {
               required: true,
@@ -141,7 +141,7 @@ const CreateCourse = () => {
             onChange={(value) =>
               setValues({
                 ...values,
-                price: value,
+                price: value!,
               })
             }
           />
