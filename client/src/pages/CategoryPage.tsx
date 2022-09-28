@@ -5,6 +5,7 @@ import ShowCourses from "../components/ShowCourses";
 import { Category } from "../models/category";
 import { Course } from "../models/course";
 import { Row } from "antd";
+import Categories from "../components/Categories";
 
 const CategoryPage = () => {
   const [data, setData] = useState<Category>();
@@ -17,20 +18,23 @@ const CategoryPage = () => {
   }, [id]);
 
   return (
-    <div className="course">
-      <div className="course__header">
-        <h1>Pick a course from your favorite category</h1>
-        <h2>{data?.name}</h2>
+    <div>
+      <Categories/>
+      <div className="course">
+        <div className="course__header">
+          <h1>Pick a course from your favorite category</h1>
+          <h2>{data?.name}</h2>
+        </div>
+        <Row gutter={[24, 32]}>
+          {data?.courses?.length ? (
+            data.courses.map((course: Course, index: number) => {
+              return <ShowCourses key={index} course={course} />;
+            })
+          ) : (
+            <h1>There are no courses in this category...</h1>
+          )}
+        </Row>
       </div>
-      <Row gutter={[24, 32]}>
-        {data?.courses?.length ? (
-          data.courses.map((course: Course, index: number) => {
-            return <ShowCourses key={index} course={course} />;
-          })
-        ) : (
-          <h1>There are no courses in this category...</h1>
-        )}
-      </Row>
     </div>
   );
 };
