@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -42,7 +43,7 @@ namespace API.Controllers
 
             var userBasket = await ExtractBasket(user.UserName);
             var basket = await ExtractBasket(Request.Cookies["clientId"]);
-             var courses = _context.UserCourses.AsQueryable();
+            var courses = _context.UserCourses.AsQueryable();
 
             if (basket != null)
             {
@@ -88,30 +89,49 @@ namespace API.Controllers
         }
 
         [Authorize]
-         [HttpPost("purchaseCourses")]
-         public async Task<ActionResult> AddCourses()
-         {
-             var basket = await ExtractBasket(User.Identity.Name);
+        [HttpPost("purchaseCourses")]
+        public async Task<ActionResult> AddCourses()
+        {
+            var basket = await ExtractBasket(User.Identity.Name);
 
-             var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            foreach(BasketItem course in basket.Items)
+            foreach (BasketItem course in basket.Items)
             {
-                  var userCourse = new UserCourse
-                  {
+                var userCourse = new UserCourse
+                {
                     CourseId = course.CourseId,
                     UserId = user.Id
-                  };
-                    _context.UserCourses.Add(userCourse);
+                };
+                _context.UserCourses.Add(userCourse);
             }
 
             var result = await _context.SaveChangesAsync() > 0;
 
             if (result) return Ok();
 
-              return BadRequest(new ApiResponse(400, "Problem adding Course"));
+            return BadRequest(new ApiResponse(400, "Problem adding Course"));
 
-         }
+        }
+
+        [Authorize]
+        [HttpPost("addRole")]
+
+        public async Task<ActionResult> AddRole()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            await _userManager.AddToRoleAsync(user, "Instructor");
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("unpublishedCourses")]
+        public List<Course> unpublishedCourses()
+        {
+            var courses = _context.Courses.Where(x => x.Instructor == User.Identity.Name).Where(x => x.Published == false).ToList();
+            return courses;
+        }
 
         [Authorize]
         [HttpGet("currentUser")]
@@ -127,7 +147,7 @@ namespace API.Controllers
             {
                 Email = user.Email,
                 Token = await _tokenService.GenerateToken(user),
-                Basket =  _mapper.Map<Basket, BasketDto>(basket),
+                Basket = _mapper.Map<Basket, BasketDto>(basket),
                 Courses = courses.Where(x => x.UserId == user.Id).Select(u => u.Course).ToList()
             };
         }
@@ -144,7 +164,8 @@ namespace API.Controllers
                         .Include(b => b.Items)
                         .ThenInclude(i => i.Course)
                         .OrderBy(i => i.Id)
-                        .FirstOrDefaultAsync(x => x.ClientId == clientId);        }
+                        .FirstOrDefaultAsync(x => x.ClientId == clientId);
+        }
 
     }
 }

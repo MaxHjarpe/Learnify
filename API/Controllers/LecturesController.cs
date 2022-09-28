@@ -63,8 +63,38 @@ namespace API.Controllers
             if (result > 0) return Ok();
 
             return BadRequest(new ApiResponse(400, "Problem updating lecture"));
+        }
 
+        [Authorize(Roles = "Instructor")]
+        [HttpPost]
+        public async Task<ActionResult<string>> AddSection(AddSectionDto sectionDto)
+        {
+            var course = await _context.Courses.FindAsync(sectionDto.CourseId);
 
+            var section = new Section
+            {
+                Name = sectionDto.SectionName,
+                Course = course,
+            };
+
+            _context.Sections.Add(section);
+
+            foreach (var item in sectionDto.Lectures)
+            {
+                var lecture = new Lecture {
+                    Title = item.Title,
+                    Url = item.URL,
+                    Section = section
+                };
+
+                _context.Lectures.Add(lecture);
+            }
+
+            var response = await _context.SaveChangesAsync() > 0;
+
+            if (response) return "Section added successfully";
+
+            return BadRequest(new ApiResponse(400, "Problem creating section"));
         }
     }
 }

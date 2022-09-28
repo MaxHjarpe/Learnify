@@ -4,7 +4,7 @@ import LoginPage from "./pages/Login";
 import DetailPage from "./pages/DetailPage";
 import Homepage from "./pages/Homepage";
 import Navigation from "./components/Navigation";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import Category from "./components/Categories";
 import CategoryPage from "./pages/CategoryPage";
 import DescriptionPage from "./pages/DescriptionPage";
@@ -17,6 +17,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import CheckoutPage from "./pages/CheckoutPage";
 import Loading from "./components/Loading";
 import CoursePage from "./pages/CoursePage";
+import InstructorPage from "./pages/InstructorPage";
+import CreateCourse from "./pages/CreateCourse";
+import { getCategoriesAsync } from "./redux/slice/categorySlice";
+import SectionPage from "./pages/SectionPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -26,6 +30,7 @@ function App() {
     try {
       await dispatch(fetchCurrentUser());
       await dispatch(fetchBasketItemAsync());
+      await dispatch(getCategoriesAsync());
     } catch (error: any) {
       console.log(error);
     }
@@ -51,6 +56,9 @@ function App() {
         <PrivateRoute exact path="/profile" component={Dashboard} />
         <PrivateRoute exact path="/checkout" component={CheckoutPage} />
         <PrivateRoute exact path="/learn/:course/:lecture" component={CoursePage} />
+        <PrivateRoute exact path="/instructor" component={InstructorPage} />
+        <PrivateRoute exact path="/instructor/course" component={CreateCourse} />
+        <PrivateRoute exact path="/:course/lectures" component={SectionPage} />
       </Switch>
     </>
   );
