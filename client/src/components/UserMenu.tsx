@@ -22,11 +22,11 @@ const UserMenu = () => {
   const menu = (
     <Menu>
       <Menu.Item key={1}>
-        <Link to="/profile">My Courses</Link>
+        <Link to="/profile">My Learning</Link>
       </Menu.Item>
       {user?.roles?.includes("Instructor") && (
         <Menu.Item key={2}>
-          <Link to="/instructor">Go to instructor page</Link>
+          <Link to="/instructor">Instructor page</Link>
         </Menu.Item>
       )}
       <Menu.Item key={3}>
@@ -36,7 +36,7 @@ const UserMenu = () => {
   );
   return (
     <Dropdown.Button overlay={menu} placement="bottom" icon={<UserOutlined />}>
-      Menu
+      Profile
     </Dropdown.Button>
   );
 };
