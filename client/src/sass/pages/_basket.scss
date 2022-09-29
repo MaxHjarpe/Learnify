@@ -1,3 +1,14 @@
+.action__remove {
+  display: flex;
+  justify-content: center;
+  
+  
+  &__trash-icon {
+    cursor: pointer;
+    
+  }
+}
+
 .basket-page {
   display: flex;
   flex-direction: column;
@@ -45,15 +56,56 @@
 
       &__checkout {
         color: white;
-        background-color: $color-primary;
+        // background-color: $color-primary;
         padding: 10px 40px;
         margin-top: 10px;
         display: flex;
         justify-content: center;
         font-weight: bold;
         font-size: 1.2em;
-        cursor: pointer;
+        
+
       }
-    }
+      &__checkout {
+        border-radius: 4px;
+        background-color: #5ca1e1;
+        border: none;
+        color: #fff;
+        text-align: center;
+        font-size: 32px;
+        padding: 16px;
+        width: 220px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 36px;
+        box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
+      }
+      
+      &__checkout {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+      }
+      
+      &__checkout:after {
+        content: '🛒';
+        position: absolute;
+        opacity: 0;  
+        top: 14px;
+        right: -20px;
+        transition: 0.5s;
+      }
+      
+      &__checkout:hover{
+        padding-right: 24px;
+        padding-left:8px;
+      }
+      
+      &__checkout:hover:after {
+        opacity: 1;
+        right: 3px;
+      }
   }
+}
 }

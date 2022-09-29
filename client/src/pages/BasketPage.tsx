@@ -1,19 +1,17 @@
 import React from "react";
-import { Table } from "antd";
+import { Popconfirm, Table } from "antd";
 import { CourseItem } from "../models/basket";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
 import { removeBasketItemAsync } from "../redux/slice/basketSlice";
-
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const BasketPage = () => {
-
-  const {basket} = useAppSelector(state => state.basket);
+  const { basket } = useAppSelector((state) => state.basket);
   const dispatch = useAppDispatch();
   const basketCount = basket?.items.length || 0;
   const total = basket?.items.reduce((sum, item) => sum + item.price, 0);
-
 
   const columns = [
     {
@@ -36,7 +34,7 @@ const BasketPage = () => {
       render: (price: number) => <div>$ {price}</div>,
     },
     {
-      title: "Instructor",
+      title: "Tutor",
       key: "instructor",
       dataIndex: "instructor",
     },
@@ -44,9 +42,19 @@ const BasketPage = () => {
       title: "Action",
       key: "action",
       render: (item: CourseItem) => (
-        <div onClick={() => dispatch(removeBasketItemAsync({courseId: item.courseId}))}>
-          <FaIcons.FaTrash />
-        </div>
+        <Popconfirm
+          title="Are you sure you want to return this course?"
+          okText="Yes"
+          cancelText="No"
+          icon={<QuestionCircleOutlined style={{ color: 'red' }}/>}
+          onConfirm={() =>
+            dispatch(removeBasketItemAsync({ courseId: item.courseId }))
+          }
+        >
+          <div className="action__remove">
+            <FaIcons.FaTrashAlt className="action__remove__trash-icon" />
+          </div>
+        </Popconfirm>
       ),
     },
   ];
@@ -62,7 +70,11 @@ const BasketPage = () => {
         </h2>
         <div className="basket-page__body">
           <div className="basket-page__body__table">
-            <Table columns={columns} dataSource={basket?.items} rowKey="courseId" />
+            <Table
+              columns={columns}
+              dataSource={basket?.items}
+              rowKey="courseId"
+            />
           </div>
           {total! > 0 && (
             <div className="basket-page__body__summary">
@@ -72,10 +84,10 @@ const BasketPage = () => {
                 $ {total ? total : 0}{" "}
               </div>
               <Link to="/checkout">
-                <div className="basket-page__body__summary__checkout">
+                <button className="basket-page__body__summary__checkout">
                   {" "}
                   Checkout{" "}
-                </div>
+                </button>
               </Link>
             </div>
           )}
