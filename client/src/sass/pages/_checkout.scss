@@ -1,4 +1,6 @@
 .checkout {
+  font-family: $font-primary;
+
     display: flex;
     max-width: 1440px;
     margin: 0 auto;
@@ -48,6 +50,8 @@
   }
   
   .inline {
+  font-family: $font-primary;
+
     display: flex;
     justify-content: space-between;
   
@@ -64,6 +68,8 @@
   }
   
   .stripe-input {
+  font-family: $font-primary;
+
     border: solid 1px #d9d9d9;
     padding: 7px;
   }

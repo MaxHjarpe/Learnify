@@ -1,4 +1,6 @@
 .instructor {
+  font-family: $font-primary;
+
   display: flex;
   padding: 50px;
   justify-content: space-between;
@@ -32,6 +34,8 @@
   }
 
   &__right {
+  font-family: $font-primary;
+
     display: flex;
     flex: 1;
     justify-content: flex-end;

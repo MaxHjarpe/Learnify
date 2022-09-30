@@ -3,19 +3,23 @@
   background-color: $color-grey-light-1;
   margin: -10px;
   padding: 10px 5px;
+  font-family: $font-primary;
+
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  font-family: $font-primary;
+
   
 
   &__left {
     display: flex;
     align-items: center;
     flex: 0 0 40%;
-    font-family: 'Lato';
+    
 
     & > * {
       margin: 0 10px;
@@ -58,6 +62,8 @@
   }
 
   &__right {
+  font-family: $font-primary;
+
     display: flex;
     align-items: center;
     flex: 1;
@@ -129,6 +135,8 @@
 }
 
 .nav-menu {
+  font-family: $font-primary;
+
   background-color: #0e0545;
   width: 100vw;
   height: 100vh;

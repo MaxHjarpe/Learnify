@@ -1,14 +1,21 @@
 .dashboard {
+  font-family: $font-primary;
+
   display: flex;
   flex-direction: column;
 
   &__header {
-    background: $color-primary;
+    background: #5ca1e1;
     height: 20%;
     display: flex;
     align-items: center;
-    padding: 30px;
+    padding: 20px;
     justify-content: space-between;
+
+    &__head {
+      font-weight: bold;
+      font-size:xx-large;
+    }
 
     @media only screen and (max-width: $bp-medium) {
       flex-direction: column;
@@ -20,8 +27,10 @@
   }
 
   &__courses {
-    & h1 {
-      margin-left: 50px;
-    }
+  font-family: $font-primary;
+  margin-left: 20px;
+  margin-top: 20px;
+
+    
   }
 }

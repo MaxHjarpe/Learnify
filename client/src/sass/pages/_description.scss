@@ -4,6 +4,8 @@
   margin: 0 auto;
   font-size: 1.6rem;
   max-width: 2080px;
+  font-family: $font-primary;
+  
 
   @media only screen and (max-width: $bp-medium) {
     flex-direction: column;
@@ -251,10 +253,13 @@
       }
 
       &__button {
-        display: flex;
-        flex-direction: column;
-        margin-top: 20px;
-        justify-content: center;
+        color: white;
+        font-weight: bold;
+        background-color: #5ca1e1;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 2rem;
+        box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.7);
 
         & > * {
           display: flex;
@@ -265,26 +270,11 @@
           font-weight: bold;
           cursor: pointer;
         }
-
-        &--text {
-          background-image: linear-gradient(
-            to left,
-            ($color-secondary-dark),
-            ($color-secondary-light)
-          );
-          transition: all 0.2s;
-
-          &:hover {
-            background-image: linear-gradient(
-              to left,
-              ($color-secondary-light),
-              ($color-secondary-dark)
-            );
-          }
-        }
-
-        &--cart {
-          background-color: $color-primary;
+        &:hover {
+          background-color: #164979;
+          transform: scale(1.05);
+          transition: 100ms;
+          box-shadow: 0 10px 20px -8px rgba(#5ca1e1, 2);
         }
       }
 

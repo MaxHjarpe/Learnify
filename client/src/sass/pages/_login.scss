@@ -1,4 +1,6 @@
 .log-in {
+  font-family: $font-primary;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,6 +15,8 @@
   }
   
   .log-in-card {
+  font-family: $font-primary;
+
     width: 500px;
     text-align: center;
     padding: 10px 0 20px;
