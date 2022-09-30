@@ -14,7 +14,7 @@ namespace Entity
 
         public decimal Rating { get; set; }
 
-        public string Image { get; set; } = "https://learnify-assets.s3.amazonaws.com/Images/learnify.png";
+        public string Image { get; set; } = "https://picsum.photos/251/210";
 
         public string SubTitle { get; set; }
 
