@@ -46,7 +46,7 @@ export const signInUser = createAsyncThunk<User, Login>(
       const userData = await agent.Users.login(data);
       const { basket, courses, ...user } = userData;
       if (basket) thunkAPI.dispatch(setBasket(basket));
-      if (courses) thunkAPI.dispatch(setUserCourses(courses));
+      if (courses) thunkAPI.dispatch(setUserCourses(courses)); // maybe shouldnt be here
       localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (err: any) {
