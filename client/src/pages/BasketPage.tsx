@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
 import { removeBasketItemAsync } from "../redux/slice/basketSlice";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Image } from 'antd';
+import Categories from "../components/Categories";
 
 const BasketPage = () => {
   const { basket } = useAppSelector((state) => state.basket);
@@ -19,7 +21,7 @@ const BasketPage = () => {
       dataIndex: "image",
       key: "image",
       render: (url: string) => {
-        return <img width="100px" src={url} alt={url} />;
+        return <Image width="100px" src={url} alt={url} />;
       },
     },
     {
@@ -60,7 +62,8 @@ const BasketPage = () => {
   ];
 
   return (
-    <>
+    <div>
+      <Categories />
       <div className="basket-page">
         <h1 className="basket-page__header">Shopping Cart</h1>
         <h2 className="basket-page__sub-header">
@@ -93,7 +96,7 @@ const BasketPage = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
