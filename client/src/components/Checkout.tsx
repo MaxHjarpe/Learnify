@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import agent from "../actions/agent";
 import { removeBasket } from "../redux/slice/basketSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
+import Categories from "./Categories";
 import CheckoutSummary from "./CheckoutSummary";
 
 const Checkout = () => {
@@ -47,7 +48,6 @@ const Checkout = () => {
         }
       );
       if (paymentResult.paymentIntent?.status === "succeeded") {
-
         await agent.Users.addCourse();
 
         notification.success({
@@ -70,49 +70,52 @@ const Checkout = () => {
   };
 
   return (
-    <div className="checkout">
-      <div className="checkout__form">
-        <h1>Checkout Page</h1>
-        <Card title="Fill your Card details here">
-          <Form form={form} layout="vertical">
-            <Form.Item
-              name="cardName"
-              rules={[
-                { required: true, message: "Card Name is required", min: 5 },
-              ]}
-              label="Name on Card"
-            >
-              <Input
+    <div>
+      <Categories/>
+      <div className="checkout">
+        <div className="checkout__form">
+          <h1>Checkout</h1>
+          <Card title="Card details">
+            <Form form={form} layout="vertical">
+              <Form.Item
                 name="cardName"
-                placeholder="Mention the name on your card"
-                value={cardName}
-                onChange={handleChange}
-              />
-            </Form.Item>
-            <Form.Item label="Card Number">
-              <div className="stripe-input">
-                <CardNumberElement />
+                rules={[
+                  { required: true, message: "Name is required", min: 5 },
+                ]}
+                label="Name"
+              >
+                <Input
+                  name="cardName"
+                  placeholder="Name of the holder"
+                  value={cardName}
+                  onChange={handleChange}
+                />
+              </Form.Item>
+              <Form.Item label="Card Number">
+                <div className="stripe-input">
+                  <CardNumberElement />
+                </div>
+              </Form.Item>
+              <div className="inline">
+                <Form.Item label="Expiry Date">
+                  <div className="stripe-input">
+                    <CardExpiryElement />
+                  </div>
+                </Form.Item>
+                <Form.Item label="CVC">
+                  <div className="stripe-input">
+                    <CardCvcElement />
+                  </div>
+                </Form.Item>
               </div>
-            </Form.Item>
-            <div className="inline">
-              <Form.Item label="Expiry Date">
-                <div className="stripe-input">
-                  <CardExpiryElement />
-                </div>
-              </Form.Item>
-              <Form.Item label="CVV">
-                <div className="stripe-input">
-                  <CardCvcElement />
-                </div>
-              </Form.Item>
-            </div>
-          </Form>
-        </Card>
+            </Form>
+          </Card>
+        </div>
+        <div className="checkout__summary">
+          <CheckoutSummary stripe={stripe} handleSubmit={handlePayment} />
+        </div>
       </div>
-      <div className="checkout__summary">
-        <CheckoutSummary stripe={stripe} handleSubmit={handlePayment} />
       </div>
-    </div>
   );
 };
 

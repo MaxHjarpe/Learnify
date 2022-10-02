@@ -1,75 +1,102 @@
 .checkout {
   font-family: $font-primary;
 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  & .ant-input::placeholder {
+    color: $color-grey-dark-1;
+  }
+
+  & h1 {
     display: flex;
-    max-width: 1440px;
-    margin: 0 auto;
-  
-    & .ant-input::placeholder {
-      color: $color-grey-dark-1;
-    }
-  
-    & h1 {
+      font-size: 60px;
       font-weight: bold;
-      margin-left: 10px;
-    }
-  
-    @media only screen and (max-width: $bp-medium) {
-      flex-direction: column;
-    }
-  
-    &__form {
-      display: flex;
-      flex-direction: column;
-      flex: 0 0 60%;
-      padding: 20px;
-    }
-  
-    &__summary {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      padding: 20px;
-      margin-top: 30px;
-  
-      & h2 {
-        font-weight: bold;
-      }
-  
-      &__total {
-        display: flex;
-        justify-content: space-between;
-        font-weight: bold;
-      }
-  
-      .ant-btn-primary {
-        background-color: $color-primary;
-        width: 100%;
-      }
-    }
+      // margin-top: -50px;
+      justify-content: space-between;
+      align-items: center;
+      // width: 50%;
+      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.151);
   }
-  
-  .inline {
-  font-family: $font-primary;
 
+  @media only screen and (max-width: $bp-medium) {
+    flex-direction: column;
+  }
+
+  &__form {
     display: flex;
-    justify-content: space-between;
-  
-    @media only screen and (max-width: $bp-medium) {
-      flex-direction: column;
+    flex-direction: column;
+    flex: 0 0 60%;
+    padding: 20px;
+  }
+
+  &__summary {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+    margin-top: 30px;
+
+    & h2 {
+      font-weight: bold;
     }
-  
-    & > * {
-      width: 48%;
-      @media only screen and (max-width: $bp-medium) {
-        width: 100%;
+
+    &__total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+    }
+
+    .ant-btn-primary {
+      background-color: #5ca1e1;
+      width: 100%;
+      box-shadow: 2px 2px rgba(0, 0, 0, 0.233);
+      
+
+      &:hover {
+        transform: scale(1.02) !important;
+        transition: ease-in-out 300ms !important;
+        box-shadow: 2px 2px #5ca1e181 !important;
+        background-color: #164979 !important;
       }
     }
   }
-  
-  .stripe-input {
+}
+
+.inline {
   font-family: $font-primary;
 
-    border: solid 1px #d9d9d9;
-    padding: 7px;
+  display: flex;
+  justify-content: space-between;
+
+  @media only screen and (max-width: $bp-medium) {
+    flex-direction: column;
   }
+
+  & > * {
+    width: 48%;
+    @media only screen and (max-width: $bp-medium) {
+      width: 100%;
+    }
+  }
+}
+
+.stripe-input {
+  font-family: $font-primary;
+
+  border: solid 1px #d9d9d9;
+  padding: 7px;
+}
+
+.ant-card {
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.233);
+  
+  &-head-title {
+    font-weight: 700;
+    
+  }
+}
