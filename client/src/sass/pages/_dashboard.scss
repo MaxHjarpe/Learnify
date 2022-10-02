@@ -13,24 +13,64 @@
     justify-content: space-between;
 
     &__head {
+      display: flex;
+      font-size: 60px;
       font-weight: bold;
-      font-size:xx-large;
+      // margin-top: -50px;
+      justify-content: space-between;
+      align-items: center;
+      // width: 50%;
+      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.151);
     }
 
     @media only screen and (max-width: $bp-medium) {
       flex-direction: column;
     }
 
-    & h1 {
-      color: white;
+    &__h2 {
+      display: flex;
+      font-size: 60px;
+      font-weight: bold;
+      margin-top: 10px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.151);
+
+      &__button {
+        display: flex;
+        justify-content:center ;
+        width: 100%;
+        color: white;
+        font-weight: bold;
+        background-color: #5ca1e1;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.7);
+        transition: ease-in-out 200ms;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #164979;
+          transform: scale(1.02);
+          transition: ease-in-out 200ms;
+          box-shadow: 0 10px 20px -8px rgba(#5ca1e1, 2) !important;
+        }
+      }
     }
   }
 
   &__courses {
-  font-family: $font-primary;
-  margin-left: 20px;
-  margin-top: 20px;
-
-    
+    font-family: $font-primary;
+    margin-left: 20px;
+    margin-top: 20px;
   }
+}
+
+.ant-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
