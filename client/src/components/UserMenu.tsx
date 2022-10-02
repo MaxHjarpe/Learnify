@@ -1,10 +1,11 @@
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Space, Typography } from "antd";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { removeBasket } from "../redux/slice/basketSlice";
 import { signOut } from "../redux/slice/userSlice";
 import { useAppSelector } from "../redux/store/configureStore";
-import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { DownOutlined  } from '@ant-design/icons';
+import {TbLogout} from "react-icons/tb";
 
 
 const UserMenu = () => {
@@ -19,6 +20,7 @@ const UserMenu = () => {
     history.push("/");
   };
 
+
   const menu = (
     <Menu>
       <Menu.Item key={1}>
@@ -30,14 +32,19 @@ const UserMenu = () => {
         </Menu.Item>
       )}
       <Menu.Item key={3}>
-        <div onClick={signout}>Log out <LogoutOutlined /></div>
+        <div onClick={signout}>Log out <Space> <TbLogout/></Space> </div>
       </Menu.Item>
     </Menu>
   );
   return (
-    <Dropdown.Button overlay={menu} placement="bottom" icon={<UserOutlined />}>
-      Profile
-    </Dropdown.Button>
+    <Dropdown overlay={menu}>
+
+      <Space>
+        Menu
+        <DownOutlined />
+      </Space>
+
+  </Dropdown>
   );
 };
 
