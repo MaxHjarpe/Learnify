@@ -69,7 +69,7 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
             <Title level={2} className="log-in-card__intro-title">
               Sign up with Learnify!
             </Title>
-            <Text>Use your Username, Email and Password to Register</Text>
+            <Text>Sign up with a Username, Email and Password!</Text>
           </Typography>
         </div>
         <Content className="log-in__form">
@@ -127,8 +127,8 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
               />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button className="login__button" type="primary" htmlType="submit">
+                Sign me up!
               </Button>
             </Form.Item>
           </Form>

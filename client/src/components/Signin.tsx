@@ -102,8 +102,8 @@ const Signin = ({ toggleRegister }: Props) => {
               />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-              <Button onClick={submitUser} type="primary" htmlType="submit">
-                Submit
+              <Button className="login__button" onClick={submitUser} type="primary" htmlType="submit">
+                Log in
               </Button>
             </Form.Item>
           </Form>

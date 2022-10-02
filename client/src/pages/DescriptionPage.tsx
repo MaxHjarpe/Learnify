@@ -1,5 +1,7 @@
+import { Image } from "antd";
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import Categories from "../components/Categories";
 import { Learning, Requirement } from "../models/course";
 import { addBasketItemAsync } from "../redux/slice/basketSlice";
 import { coursesSelector, getCourseAsync } from "../redux/slice/courseSlice";
@@ -38,6 +40,8 @@ const DescriptionPage = () => {
   };
 
   return (
+    <div>
+      <Categories/>
     <div className="description-page">
       <div className="description-page__body">
         <div className="description-page__header">
@@ -106,7 +110,7 @@ const DescriptionPage = () => {
       <div className="description-page__sidebar">
         <div className="description-page__sidebar__box">
           <div className="description-page__sidebar__box__video">
-            <img alt="__image" src={course?.image} width="100%" height="100%" />
+            <Image alt="__image" src={course?.image} width="100%" height="100%" />
           </div>
           <div className="description-page__sidebar__box__price">
             {" "}
@@ -147,10 +151,12 @@ const DescriptionPage = () => {
             {basket?.items.find((item) => item.courseId === course?.id) !==
             undefined ? (
               <Link
-                className="description-page__sidebar__box__button--cart"
+                
                 to="/basket"
               >
+              <div className="description-page__sidebar__box__button--cart">
                 Go to cart
+              </div>
               </Link>
             ) : (
               <div
@@ -162,9 +168,6 @@ const DescriptionPage = () => {
                 Add to cart
               </div>
             )}
-            <div className="description-page__sidebar__box__button--text">
-              Book now
-            </div>
           </div>
         </div>
         <div className="description-page__sidebar__body">
@@ -194,6 +197,7 @@ const DescriptionPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
