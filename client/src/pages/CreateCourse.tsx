@@ -3,6 +3,7 @@ import { Content } from 'antd/lib/layout/layout';
 import { ChangeEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import agent from '../actions/agent';
+import Categories from '../components/Categories';
 import { Category } from '../models/category';
 import { RegisterCourse } from '../models/course';
 import { categoriesSelector } from '../redux/slice/categorySlice';
@@ -69,9 +70,12 @@ const CreateCourse = () => {
   };
 
   return (
+    <div>
+      <Categories/>
     <Content style={{ padding: '50px' }}>
-      <h1>Create Course</h1>
+      <h1 className='create__course__header'>Create Course</h1>
       <Form {...formItemLayout} form={form} name="course" onFinish={onSubmit}>
+      <div className='container'>
         <Form.Item
           name="title"
           label="Course Title"
@@ -136,7 +140,7 @@ const CreateCourse = () => {
         >
           <InputNumber
             name="price"
-            placeholder="Course Price"
+            placeholder="Price"
             value={price}
             onChange={(value) =>
               setValues({
@@ -204,12 +208,14 @@ const CreateCourse = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={onSubmit}>
-            Submit
+          <Button className='create__course__header__button' onClick={onSubmit}>
+            Submit Course
           </Button>
         </Form.Item>
+        </div>
       </Form>
     </Content>
+    </div>
   );
 };
 
