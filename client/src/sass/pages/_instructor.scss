@@ -6,12 +6,20 @@
   justify-content: space-between;
   max-width: 1240px;
   margin: 0 auto;
+  flex-direction: column;
+
 
   &__left {
+    
     &__header {
-      font-size: 2rem;
+      display: flex;
+      font-size: 60px;
       font-weight: bold;
-      flex: 0 0 70%;
+      // margin-top: -50px;
+      justify-content: space-between;
+      align-items: center;
+      // width: 50%;
+      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.151);
     }
 
     &__courses {
@@ -34,10 +42,48 @@
   }
 
   &__right {
-  font-family: $font-primary;
+    font-family: $font-primary;
 
     display: flex;
     flex: 1;
     justify-content: flex-end;
   }
+}
+
+.create__course__header {
+  display: flex;
+  font-size: 60px;
+  font-weight: bold;
+  // margin-top: -50px;
+  justify-content: space-between;
+  align-items: center;
+  // width: 50%;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.151);
+}
+
+.create__course__header__button {
+  color: white !important;
+  background-color: #5ca1e1 !important;
+  border-radius: 5% !important;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.171) !important;
+  transition: ease-in-out 100ms !important;
+
+
+  &:hover {
+    transition: ease-in-out 100ms !important;
+    box-shadow: 0 10px 20px -8px rgba(#5ca1e1, 2) !important;
+
+  }
+}
+
+.ant-form-item-label {
+  font-family: $font-primary;
+  font-weight: bold;
+}
+
+.empty__course {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  flex-direction: column;
 }
